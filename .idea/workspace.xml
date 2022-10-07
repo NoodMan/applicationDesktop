@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59b91925-aa5d-4c91-b7c8-5a450ce90113" name="Changes" comment="install FlatLaf (custom color)">
+    <list default="true" id="59b91925-aa5d-4c91-b7c8-5a450ce90113" name="Changes" comment="change background color windows">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/adlinec/applicationDesktop/Champs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/adlinec/applicationDesktop/Fenetre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/adlinec/applicationDesktop/Fenetre.java" afterDir="false" />
     </list>
@@ -92,7 +93,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665151034840</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="change background color windows">
+      <created>1665152080008</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1665152080008</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -110,6 +118,7 @@
     <MESSAGE value="First commit" />
     <MESSAGE value="commit close form" />
     <MESSAGE value="install FlatLaf (custom color)" />
-    <option name="LAST_COMMIT_MESSAGE" value="install FlatLaf (custom color)" />
+    <MESSAGE value="change background color windows" />
+    <option name="LAST_COMMIT_MESSAGE" value="change background color windows" />
   </component>
 </project>

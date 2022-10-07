@@ -14,19 +14,20 @@ public class Fenetre extends JFrame {
     protected boolean themeSombre = true;
 
 // pour la création de la fenêtre
-    public Fenetre(){
+    public Fenetre() {
         setSize(500, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 //création formulaire
-        JPanel panneau = new JPanel();
+//pour le positionner les élèments dans la fenêtre
+        JPanel panneau = new JPanel(new BorderLayout());
 
         setContentPane(panneau);
 
 //-------------------------------------BOUTON------------------------------
         JButton bouton = new JButton(" ☞ Click me for close app! ☻");
 
-        panneau.add(bouton);
+
 //creation nouvelle classe anonime qui implemente l'interfaceActionListener
 //        ActionListener evenement = new ActionListener(){
 //            @Override
@@ -41,16 +42,14 @@ public class Fenetre extends JFrame {
         bouton.addActionListener(e -> System.out.println(" You clicked me!👏🏻"));
 
 
-
-
 //----------------------------------COMBO BOX--------------------------------
 //création liste déroulante
         String[] listeCivilite = {"Mr.", "Me.", "Mlle", "Non précisé!"};
         JComboBox<String> selectCivilite = new JComboBox<>(listeCivilite);
-        panneau.add(selectCivilite);
+
 
 // pour récupérer un évènement
-        selectCivilite.addActionListener((ActionEvent e)  -> {
+        selectCivilite.addActionListener((ActionEvent e) -> {
             JComboBox comboBox = (JComboBox) e.getSource();
             System.out.println(comboBox.getSelectedItem());
 
@@ -65,36 +64,35 @@ public class Fenetre extends JFrame {
 
 // pour afficher la liste d'utilisateur custom
         selectUtilisateur.setRenderer(
-               new DefaultListCellRenderer() {
-                   @Override
-                   public Component getListCellRendererComponent(
-                           final JList<?> list,
-                           final Object value,
-                           final int index,
-                           final boolean isSelected,
-                           final boolean cellHasFocus) {
-                       super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                       Utilisateur utilisateur = (Utilisateur) value;
-                       if(utilisateur != null){
-                           setText(utilisateur.getPrenom() + " " + utilisateur.getPrenom());
-                       }else {
-                           setText("Aucun");
-                       }
+                new DefaultListCellRenderer() {
+                    @Override
+                    public Component getListCellRendererComponent(
+                            final JList<?> list,
+                            final Object value,
+                            final int index,
+                            final boolean isSelected,
+                            final boolean cellHasFocus) {
+                        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                        Utilisateur utilisateur = (Utilisateur) value;
+                        if (utilisateur != null) {
+                            setText(utilisateur.getPrenom() + " " + utilisateur.getPrenom());
+                        } else {
+                            setText("Aucun");
+                        }
 // setText(utilisateur.getNom() + " " + utilisateur.getPrenom()); // a utiliser si sans la condition (if ! null)
 //couleur si sélectionner
-                       if(isSelected) {
-                           setBackground(Color.CYAN);
-                       }else {
-                           setBackground(Color.RED);
-                       }
+                        if (isSelected) {
+                            setBackground(Color.CYAN);
+                        } else {
+                            setBackground(Color.RED);
+                        }
 
 //                       setText("toto" + "blabla");
 //                       setText("toto");
-                       return this;
-                   }
-               }
+                        return this;
+                    }
+                }
         );
-        panneau.add(selectUtilisateur);
 
 
 // ---------------------------------BOUTON DU FORMULAIRE------------------------------------------
@@ -103,9 +101,9 @@ public class Fenetre extends JFrame {
         JButton boutonFormulaire = new JButton("Envoyer");
         boutonFormulaire.addActionListener(e -> {
 
-            if(selectUtilisateur.getSelectedItem() != null) {
+            if (selectUtilisateur.getSelectedItem() != null) {
                 Utilisateur utilisateur =
-                        (Utilisateur)selectUtilisateur.getSelectedItem();
+                        (Utilisateur) selectUtilisateur.getSelectedItem();
 
                 System.out.println(
                         selectCivilite.getSelectedItem() + utilisateur.getNom()
@@ -114,11 +112,6 @@ public class Fenetre extends JFrame {
 
         });
 
-        panneau.add(boutonFormulaire);
-
-
-
-
 
         //-------------change background color windows--------------
 
@@ -126,32 +119,32 @@ public class Fenetre extends JFrame {
         panneau.add(boutonChangeTheme);
         boutonChangeTheme.addActionListener(e -> {
             try {
-                if(themeSombre) {
+                if (themeSombre) {
                     themeSombre = false;
                     UIManager.setLookAndFeel(new FlatLightLaf());
-                }else {
+                } else {
                     themeSombre = true;
                     UIManager.setLookAndFeel(new FlatDarculaLaf());
-            }
+                }
                 SwingUtilities.updateComponentTreeUI(this);
-        } catch (Exception ex) {
+            } catch (Exception ex) {
                 System.out.println("Failed to initialize Laf");
             }
-            });
+        });
 //-------------------------------------FERMETURE APPLI --------------------------------------
-        bouton.addActionListener(e ->  {
-            Object[] choix = {"Oui","Nope :("};
+        bouton.addActionListener(e -> {
+            Object[] choix = {"Oui", "Nope :("};
             int reponse = JOptionPane.showOptionDialog(this,
                     "Voulez vous fermer l'application ?",
                     "Confirmer",
                     JOptionPane.YES_NO_OPTION,
-            //        JOptionPane.QUESTION_MESSAGE, // image java normal
+                    //        JOptionPane.QUESTION_MESSAGE, // image java normal
                     JOptionPane.QUESTION_MESSAGE, // image panneau stop java
                     null,
                     choix,
                     choix[0]);
 
-            if(reponse == JOptionPane.YES_OPTION){
+            if (reponse == JOptionPane.YES_OPTION) {
                 System.exit(0);
             }
         });
@@ -179,11 +172,43 @@ public class Fenetre extends JFrame {
 //            }
 //        });
 //--------------------------------------------------------------------------
+//        panneau.add(bouton);
+//        panneau.add(selectCivilite);
+//        panneau.add(selectUtilisateur);
+//        panneau.add(boutonFormulaire);
+//        panneau.add(boutonChangeTheme);
+
+// ----------------------------------création box--------------------------
+
+        Box boxPrincipal = Box.createVerticalBox();
+        panneau.add(boxPrincipal, BorderLayout.CENTER);
+
+        Box boxMenu = Box.createHorizontalBox();
+        boxMenu.add(bouton);
+        boxMenu.add(boutonChangeTheme);
+        boxPrincipal.add(boxMenu);
+
+
+//avant la création de la class Champs
+//        Box boxUtilisateur = Box.createHorizontalBox();
+//        boxUtilisateur.setMaximumSize(new Dimension(500, 30));
+//        boxUtilisateur.add(new JLabel("Civilite"));
+//        boxUtilisateur.add(selectCivilite);
+//        boxUtilisateur.add(selectUtilisateur);
+
+//pour créer un espace entre les box
+        boxPrincipal.add(Box.createRigidArea(new Dimension(1, 25)));
+//      boxPrincipal.add(Champs.generate("Civilite ", selectCivilite, selectUtilisateur));
+        boxPrincipal.add(Champs.generate("Civilite ", selectCivilite));
+        boxPrincipal.add(Champs.generate("Utilisateurs ", selectUtilisateur));
+
+        panneau.add(boutonFormulaire, BorderLayout.SOUTH);
+
 
         setVisible(true);
     }
 
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         FlatDarculaLaf.setup(); // version dark
 //FlatLightLaf.setup();
         new Fenetre();
