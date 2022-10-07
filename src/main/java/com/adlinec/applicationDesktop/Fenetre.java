@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 public class Fenetre extends JFrame {
+// mise en place theme sombre
+    protected boolean themeSombre = true;
+
 // pour la création de la fenêtre
     public Fenetre(){
         setSize(500, 500);
@@ -112,6 +115,29 @@ public class Fenetre extends JFrame {
         });
 
         panneau.add(boutonFormulaire);
+
+
+
+
+
+        //-------------change background color windows--------------
+
+        JButton boutonChangeTheme = new JButton("Change theme");
+        panneau.add(boutonChangeTheme);
+        boutonChangeTheme.addActionListener(e -> {
+            try {
+                if(themeSombre) {
+                    themeSombre = false;
+                    UIManager.setLookAndFeel(new FlatLightLaf());
+                }else {
+                    themeSombre = true;
+                    UIManager.setLookAndFeel(new FlatDarculaLaf());
+            }
+                SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception ex) {
+                System.out.println("Failed to initialize Laf");
+            }
+            });
 //-------------------------------------FERMETURE APPLI --------------------------------------
         bouton.addActionListener(e ->  {
             Object[] choix = {"Oui","Nope :("};
