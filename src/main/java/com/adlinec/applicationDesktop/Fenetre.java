@@ -1,8 +1,13 @@
 package com.adlinec.applicationDesktop;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 
 public class Fenetre extends JFrame {
 // pour la création de la fenêtre
@@ -15,7 +20,8 @@ public class Fenetre extends JFrame {
 
         setContentPane(panneau);
 
-        JButton bouton = new JButton(" ☞ Click me! ☻");
+//-------------------------------------BOUTON------------------------------
+        JButton bouton = new JButton(" ☞ Click me for close app! ☻");
 
         panneau.add(bouton);
 //creation nouvelle classe anonime qui implemente l'interfaceActionListener
@@ -30,6 +36,100 @@ public class Fenetre extends JFrame {
 //idem  bouton.addActionListener(evenement);
 //création class anonyme qui implement l'interface et surcharge la methode ActionListener
         bouton.addActionListener(e -> System.out.println(" You clicked me!👏🏻"));
+
+
+
+
+//----------------------------------COMBO BOX--------------------------------
+//création liste déroulante
+        String[] listeCivilite = {"Mr.", "Me.", "Mlle", "Non précisé!"};
+        JComboBox<String> selectCivilite = new JComboBox<>(listeCivilite);
+        panneau.add(selectCivilite);
+
+// pour récupérer un évènement
+        selectCivilite.addActionListener((ActionEvent e)  -> {
+            JComboBox comboBox = (JComboBox) e.getSource();
+            System.out.println(comboBox.getSelectedItem());
+
+        });
+        Utilisateur[] utilisateurs = {
+                null,
+                new Utilisateur("Balthazar", "Picsou"),
+                new Utilisateur("Archibald", "Gripsou"),
+                new Utilisateur("Flagada", "Jones"),
+        };
+        JComboBox<Utilisateur> selectUtilisateur = new JComboBox<>(utilisateurs);
+
+// pour afficher la liste d'utilisateur custom
+        selectUtilisateur.setRenderer(
+               new DefaultListCellRenderer() {
+                   @Override
+                   public Component getListCellRendererComponent(
+                           final JList<?> list,
+                           final Object value,
+                           final int index,
+                           final boolean isSelected,
+                           final boolean cellHasFocus) {
+                       super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                       Utilisateur utilisateur = (Utilisateur) value;
+                       if(utilisateur != null){
+                           setText(utilisateur.getPrenom() + " " + utilisateur.getPrenom());
+                       }else {
+                           setText("Aucun");
+                       }
+// setText(utilisateur.getNom() + " " + utilisateur.getPrenom()); // a utiliser si sans la condition (if ! null)
+//couleur si sélectionner
+                       if(isSelected) {
+                           setBackground(Color.CYAN);
+                       }else {
+                           setBackground(Color.RED);
+                       }
+
+//                       setText("toto" + "blabla");
+//                       setText("toto");
+                       return this;
+                   }
+               }
+        );
+        panneau.add(selectUtilisateur);
+
+
+// ---------------------------------BOUTON DU FORMULAIRE------------------------------------------
+// création bouton formulaire
+
+        JButton boutonFormulaire = new JButton("Envoyer");
+        boutonFormulaire.addActionListener(e -> {
+
+            if(selectUtilisateur.getSelectedItem() != null) {
+                Utilisateur utilisateur =
+                        (Utilisateur)selectUtilisateur.getSelectedItem();
+
+                System.out.println(
+                        selectCivilite.getSelectedItem() + utilisateur.getNom()
+                );
+            }
+
+        });
+
+        panneau.add(boutonFormulaire);
+//-------------------------------------FERMETURE APPLI --------------------------------------
+        bouton.addActionListener(e ->  {
+            Object[] choix = {"Oui","Nope :("};
+            int reponse = JOptionPane.showOptionDialog(this,
+                    "Voulez vous fermer l'application ?",
+                    "Confirmer",
+                    JOptionPane.YES_NO_OPTION,
+            //        JOptionPane.QUESTION_MESSAGE, // image java normal
+                    JOptionPane.QUESTION_MESSAGE, // image panneau stop java
+                    null,
+                    choix,
+                    choix[0]);
+
+            if(reponse == JOptionPane.YES_OPTION){
+                System.exit(0);
+            }
+        });
+//-----------------------------------AUTRE FERMETURE APPLI----------------------
 
 //⚠️ ferme la fenêtre en cliquant sur le bouton, mais ne stoppe pas le programme
 //      bouton.addActionListener(e -> setVisible(false));
@@ -52,29 +152,14 @@ public class Fenetre extends JFrame {
 //                System.exit(0);
 //            }
 //        });
-
-        bouton.addActionListener(e ->  {
-            Object[] choix = {"Oui","Nope :("};
-            int reponse = JOptionPane.showOptionDialog(this,
-                    "Voulez vous fermer l'application ?",
-                    "Confirmer",
-                    JOptionPane.YES_NO_OPTION,
-            //        JOptionPane.QUESTION_MESSAGE, // image java normal
-                    JOptionPane.QUESTION_MESSAGE, // image panneau stop java
-                    null,
-                    choix,
-                    choix[0]);
-
-            if(reponse == JOptionPane.YES_OPTION){
-                System.exit(0);
-            }
-        });
-
+//--------------------------------------------------------------------------
 
         setVisible(true);
     }
 
     public static void main(String[] args) {
+        FlatDarculaLaf.setup(); // version dark
+//FlatLightLaf.setup();
         new Fenetre();
     }
 }
